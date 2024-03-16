@@ -1,15 +1,21 @@
 import React, { useState, useEffect } from "react";
+import axios from "axios";
 import { Link } from "react-router-dom";
 
 function HomePage() {
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
-    // Fetch blog posts from backend and update state
-    // Example:
-    // fetch('/api/posts')
-    //   .then(response => response.json())
-    //   .then(data => setPosts(data));
+    const fetchData = async () => {
+      try {
+        const response = await axios.get("http://localhost:3000/api/getAll");
+        setPosts(response.data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
   }, []);
 
   return (
@@ -24,10 +30,11 @@ function HomePage() {
       <h1>Blog Posts</h1>
       <Link to="/create">Create New Post</Link>
       <ul>
-        {posts.map((post) => (
-          <li key={post.id}>
-            <Link to={`/post/${post.id}`}>{post.title}</Link>
-          </li>
+        {posts.map((post, index) => (
+          <div key={index}>
+            <h2>{post?.name}</h2>
+            <h2>{post?.content}</h2>
+          </div>
         ))}
       </ul>
     </div>
