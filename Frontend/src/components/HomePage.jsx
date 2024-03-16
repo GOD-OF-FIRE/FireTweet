@@ -106,14 +106,15 @@ function HomePage({ onLogout }) {
           alignItems: "center",
           marginBottom: "20px",
           width: "100%",
-          position: "sticky",
+          position: "fixed",
           top: "0",
           left: "0",
           right: "0",
           margin: "0",
           backdropFilter: "blur(8px)", // Apply blur effect
           backgroundColor: "#36363689", // Greyish background
-          boxShadow: "0px 2px 4px rgba(255, 255, 255, 0.5)", // White shadow
+          boxShadow: "0px 2px 4px rgba(255, 255, 255, 0.5)",
+          height: "4vh", // White shadow
         }}
       >
         <Typography
@@ -125,6 +126,7 @@ function HomePage({ onLogout }) {
             overflow: "hidden",
             textOverflow: "ellipsis",
             whiteSpace: mobileView ? "nowrap" : "initial",
+            textShadow: "2px 2px 2px #fff",
           }}
         >
           Fire Blog
@@ -140,7 +142,7 @@ function HomePage({ onLogout }) {
         </IconButton>
       </nav>
 
-      <div style={{ minHeight: "100vh" }}>
+      <div style={{ minHeight: "100vh", marginTop: "5vh" }}>
         <IconButton
           style={{
             textDecoration: "none",
@@ -165,7 +167,12 @@ function HomePage({ onLogout }) {
         >
           <Typography
             variant={mobileView ? "h4" : "h2"}
-            style={{ marginBottom: "20px", textAlign: "center", color: "#fff" }}
+            style={{
+              marginBottom: "20px",
+              textAlign: "center",
+              color: "#fff",
+              textShadow: "2px 2px 4px #fff",
+            }}
           >
             Blazing Articles
           </Typography>

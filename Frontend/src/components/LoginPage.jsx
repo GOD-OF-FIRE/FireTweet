@@ -39,6 +39,8 @@ function LoginPage({ onLogin }) {
           transition: "letter-spacing 0.3s ease",
           letterSpacing: isHovered ? "10px" : "normal",
           cursor: "pointer",
+          textShadow: "2px 2px 2px #000",
+
         }}
         className="fire-blog-title"
         onMouseEnter={() => setIsHovered(true)}
