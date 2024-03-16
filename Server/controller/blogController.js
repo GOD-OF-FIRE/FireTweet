@@ -9,20 +9,21 @@ export const create = async (req, res) => {
     }
 
     const savedData = await blogData.save();
-    res.status(200).json(savedData);
-  } catch {
-    res.status(500).json({ error: error });
+    res.status(201).json(savedData); // Return newly created blog with 201 status (Created)
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal Server Error" });
   }
 };
 
 export const getAll = async (req, res) => {
   try {
-    const blogData = await Blog.find();
-    if (!blogData) return res.status(404).json({ msg: "Data not found" });
+    const blogData = await Blog.find().sort({ createdAt: -1 });
 
     res.status(200).json(blogData);
   } catch (error) {
-    res.status(500).json({ error: error });
+    console.error(error);
+    res.status(500).json({ error: "Internal Server Error" });
   }
 };
 
@@ -34,7 +35,8 @@ export const getOne = async (req, res) => {
 
     res.status(200).json(dataExist);
   } catch (error) {
-    res.status(500).json({ error: error });
+    console.error(error);
+    res.status(500).json({ error: "Internal Server Error" });
   }
 };
 
@@ -48,8 +50,9 @@ export const update = async (req, res) => {
       new: true,
     });
     res.status(200).json(updatedData);
-  } catch {
-    res.status(500).json({ error: error });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal Server Error" });
   }
 };
 
@@ -61,7 +64,8 @@ export const deleteData = async (req, res) => {
 
     await Blog.findByIdAndDelete(id);
     res.status(200).json({ msg: "Data deleted Successfully" });
-  } catch {
-    res.status(500).json({ error: error });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal Server Error" });
   }
 };

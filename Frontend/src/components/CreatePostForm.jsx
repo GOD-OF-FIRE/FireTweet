@@ -72,7 +72,7 @@ function CreatePostForm() {
 
       <div style={{ textAlign: "center", maxWidth: "600px", margin: "0 auto" }}>
         {!mobileView ? (
-          <Typography variant="h3" gutterBottom>
+          <Typography variant="h3" gutterBottom style={{marginTop:"5vh"}}>
             Create New Post
           </Typography>
         ) : null}
@@ -83,6 +83,7 @@ function CreatePostForm() {
             borderRadius: "10px",
             maxWidth: "100%",
             margin: "10px",
+            marginTop:"10vh"
           }}
         >
           <form

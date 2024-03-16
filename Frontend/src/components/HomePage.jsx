@@ -120,20 +120,19 @@ function HomePage({ onLogout }) {
         <Typography
           variant="h4"
           style={{
-            color: "#ff5722",
+            color: "red",
             display: "flex",
             flexWrap: "wrap",
             overflow: "hidden",
             textOverflow: "ellipsis",
             whiteSpace: mobileView ? "nowrap" : "initial",
-            textShadow: "2px 2px 2px #fff",
           }}
         >
           Fire Blog
         </Typography>
 
         <IconButton
-          style={{ color: "#ff5722", marginRight: "1em" }}
+          style={{ color: "red", marginRight: "1em" }}
           onClick={() => {
             onLogout();
           }}
@@ -142,11 +141,12 @@ function HomePage({ onLogout }) {
         </IconButton>
       </nav>
 
-      <div style={{ minHeight: "100vh", marginTop: "5vh" }}>
+      <div style={{ minHeight: "100vh", marginTop: "7vh" }}>
         <IconButton
           style={{
             textDecoration: "none",
-            background: "#ff5722",
+            background: "red",
+            color: "#fff",
             marginBottom: "20px",
             position: "fixed",
             bottom: "12px",
