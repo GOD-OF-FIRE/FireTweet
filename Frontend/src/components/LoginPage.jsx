@@ -47,7 +47,7 @@ function LoginPage({ onLogin }) {
         FIRE BLOG
       </Typography>
       <Grid item xs={10} sm={6} md={4}>
-        <Paper elevation={3} style={{ padding: "20px", borderRadius: "10px" }}>
+        <Paper elevation={3} style={{ padding: "20px", borderRadius: "10px",margin:"12px" }}>
           <Typography variant="h6" align="center" gutterBottom>
             Login
           </Typography>
