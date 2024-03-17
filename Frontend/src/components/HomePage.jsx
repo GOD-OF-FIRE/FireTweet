@@ -32,6 +32,7 @@ function HomePage({ onLogout }) {
     name: "",
     content: "",
   });
+  const [selectedPostToDelete,setSelectedPostToDelete]=useState(null)
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
@@ -397,6 +398,7 @@ function HomePage({ onLogout }) {
           <DialogActions>
             <Button
               onClick={() => {
+                console.log("click")
                 setDeleteDialogOpen(false);
                 setSelectedPostToDelete(null);
               }}
