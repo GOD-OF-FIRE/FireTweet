@@ -18,7 +18,21 @@ export const create = async (req, res) => {
 
 export const getAll = async (req, res) => {
   try {
-    const blogData = await Blog.find().sort({ createdAt: -1 });
+    const searchQuery = req.query.q; // Assuming the search query is passed as 'q' parameter in the URL
+    let blogData;
+
+    if (searchQuery) {
+      // If search query exists, perform search
+      blogData = await Blog.find({
+        $or: [
+          { name: { $regex: searchQuery, $options: 'i' } }, // Case-insensitive search on 'name' field
+          { content: { $regex: searchQuery, $options: 'i' } }, // Case-insensitive search on 'content' field
+        ],
+      }).sort({ createdAt: -1 });
+    } else {
+      // If no search query, return all blog data
+      blogData = await Blog.find().sort({ createdAt: -1 });
+    }
 
     res.status(200).json(blogData);
   } catch (error) {
@@ -26,6 +40,7 @@ export const getAll = async (req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
+
 
 export const getOne = async (req, res) => {
   try {

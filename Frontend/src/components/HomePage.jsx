@@ -18,6 +18,7 @@ import AddIcon from "@mui/icons-material/Add";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import CancelIcon from "@mui/icons-material/Cancel";
+import SearchIcon from "@mui/icons-material/Search";
 import { isMobile } from "../utilities/DetectViewportSize";
 import { toast } from "react-hot-toast";
 
@@ -31,6 +32,8 @@ function HomePage({ onLogout }) {
   });
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [selectedPostToDelete, setSelectedPostToDelete] = useState(null);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [searchResults, setSearchResults] = useState([]);
   const mobileView = isMobile();
   const navigate = useNavigate();
 
@@ -97,6 +100,21 @@ function HomePage({ onLogout }) {
     setDeleteDialogOpen(false);
   };
 
+
+  const handleSearch = async () => {
+    try {
+      const response = await axios.get(`http://localhost:3000/api/getAll?q=${searchQuery}`);
+      setSearchResults(response.data);
+    } catch (error) {
+      toast.error("Failed to fetch posts");
+      console.error("Error fetching data:", error);
+    }
+  };
+  useEffect(()=>{if(!searchQuery){
+    setSearchResults([])
+    fetchData()
+  }},[searchQuery])
+
   return (
     <div style={{ maxWidth: "100vw", overflowX: "hidden" }}>
       <nav
@@ -159,8 +177,6 @@ function HomePage({ onLogout }) {
         </IconButton>
         <div
           style={{
-            // width: "100%",
-            // padding: "12px",
             display: "flex",
             justifyContent: "center",
             flexDirection: "column",
@@ -177,46 +193,85 @@ function HomePage({ onLogout }) {
           >
             Blazing Articles
           </Typography>
-          <div style={{display:"flex",flexDirection:"column",alignItems:"center"}}>
-            {posts.map((post, index) => (
-              <div
-                key={index}
-                style={{
-                  background: "#fff",
-                  margin: "12px",
-                  color: "#333",
-                  padding: "12px",
-                  borderRadius: "10px",
-                  maxWidth: "80vw",
-                }}
+
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+            }}
+          >
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                background: "#fff",
+                width: mobileView ? "80%" : "50%",
+                padding: "12px",
+                borderRadius: "10px",
+              }}
+            >
+              <TextField
+                label="Search"
+                variant="outlined"
+                fullWidth
+                size="small" // Set the size to small
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                style={{ marginRight: "10px" }}
+              />
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={handleSearch}
+                startIcon={<SearchIcon />}
+                sx={{pr:2,pl:2}}
               >
+                Search
+              </Button>
+            </div>
+
+            {(searchResults.length > 0 ? searchResults : posts).map(
+              (post, index) => (
                 <div
+                  key={index}
                   style={{
-                    display: "flex",
-                    justifyContent: "flex-end",
+                    background: "#fff",
+                    margin: "12px",
+                    color: "#333",
+                    padding: "12px",
+                    borderRadius: "10px",
+                    maxWidth: "80vw",
                   }}
                 >
-                  <IconButton
-                    onClick={() => {
-                      handleEditClick(post);
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "flex-end",
                     }}
                   >
-                    <EditIcon sx={{ color: "#176fe2" }} />
-                  </IconButton>
-                  <IconButton
-                    onClick={() => {
-                      handleDeleteClick(post);
-                    }}
-                  >
-                    <DeleteIcon sx={{ color: "#e21717" }} />
-                  </IconButton>
+                    <IconButton
+                      onClick={() => {
+                        handleEditClick(post);
+                      }}
+                    >
+                      <EditIcon sx={{ color: "#176fe2" }} />
+                    </IconButton>
+                    <IconButton
+                      onClick={() => {
+                        handleDeleteClick(post);
+                      }}
+                    >
+                      <DeleteIcon sx={{ color: "#e21717" }} />
+                    </IconButton>
+                  </div>
+                  <Typography variant="h4" style={{ marginBottom: "10px" }}>
+                    {post?.name}
+                  </Typography>
+                  <Typography variant="body1">{post?.content}</Typography>
                 </div>
-                <Typography variant="h4" style={{ marginBottom: "10px" }}>
-                  {post?.name}
-                </Typography>
-                <Typography variant="body1">{post?.content}</Typography>
-              </div>
-            ))}
+              )
+            )}
           </div>
         </div>
         <Drawer
