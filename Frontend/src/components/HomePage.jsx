@@ -12,7 +12,7 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
-  InputAdornment // Import InputAdornment
+  InputAdornment, // Import InputAdornment
 } from "@mui/material";
 import LogoutIcon from "@mui/icons-material/Logout";
 import AddIcon from "@mui/icons-material/Add";
@@ -32,7 +32,7 @@ function HomePage({ onLogout }) {
     name: "",
     content: "",
   });
-  const [selectedPostToDelete,setSelectedPostToDelete]=useState(null)
+  const [selectedPostToDelete, setSelectedPostToDelete] = useState(null);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
@@ -41,7 +41,9 @@ function HomePage({ onLogout }) {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get("http://localhost:3000/api/getAll");
+      const response = await axios.get(
+        "https://fire-blog-backend-38c5c2cf4228.herokuapp.com/api/getAll"
+      );
       setPosts(response.data);
     } catch (error) {
       toast.error("Failed to Fetch Post");
@@ -69,7 +71,7 @@ function HomePage({ onLogout }) {
   const handleSaveChanges = async () => {
     try {
       await axios.put(
-        `http://localhost:3000/api/update/${editedPost?._id}`,
+        `https://fire-blog-backend-38c5c2cf4228.herokuapp.com/api/update/${editedPost?._id}`,
         editedPost
       );
       toast.success("Post updated successfully");
@@ -90,7 +92,7 @@ function HomePage({ onLogout }) {
   const handleConfirmDelete = async () => {
     try {
       await axios.delete(
-        `http://localhost:3000/api/delete/${selectedPostToDelete._id}`
+        `https://fire-blog-backend-38c5c2cf4228.herokuapp.com/api/delete/${selectedPostToDelete._id}`
       );
       fetchData();
       toast.success("Post deleted successfully");
@@ -102,20 +104,23 @@ function HomePage({ onLogout }) {
     setDeleteDialogOpen(false);
   };
 
-
   const handleSearch = async () => {
     try {
-      const response = await axios.get(`http://localhost:3000/api/getAll?q=${searchQuery}`);
+      const response = await axios.get(
+        `https://fire-blog-backend-38c5c2cf4228.herokuapp.com/api/getAll?q=${searchQuery}`
+      );
       setSearchResults(response.data);
     } catch (error) {
       toast.error("Failed to fetch posts");
       console.error("Error fetching data:", error);
     }
   };
-  useEffect(()=>{if(!searchQuery){
-    setSearchResults([])
-    fetchData()
-  }},[searchQuery])
+  useEffect(() => {
+    if (!searchQuery) {
+      setSearchResults([]);
+      fetchData();
+    }
+  }, [searchQuery]);
 
   return (
     <div style={{ maxWidth: "100vw", overflowX: "hidden" }}>
@@ -220,7 +225,8 @@ function HomePage({ onLogout }) {
                 size="small" // Set the size to small
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                InputProps={{ // Add InputProps for adornment
+                InputProps={{
+                  // Add InputProps for adornment
                   endAdornment: (
                     <InputAdornment position="end">
                       {searchQuery && ( // Show clear icon if searchQuery is not empty
@@ -237,7 +243,7 @@ function HomePage({ onLogout }) {
                         <SearchIcon />
                       </IconButton>
                     </InputAdornment>
-                  )
+                  ),
                 }}
               />
             </div>
@@ -252,7 +258,7 @@ function HomePage({ onLogout }) {
                     color: "#333",
                     padding: "12px",
                     borderRadius: "10px",
-                    width:"100%",
+                    width: "100%",
                     maxWidth: "80vw",
                   }}
                 >
@@ -398,7 +404,7 @@ function HomePage({ onLogout }) {
           <DialogActions>
             <Button
               onClick={() => {
-                console.log("click")
+                console.log("click");
                 setDeleteDialogOpen(false);
                 setSelectedPostToDelete(null);
               }}

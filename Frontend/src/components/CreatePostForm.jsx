@@ -25,15 +25,17 @@ function CreatePostForm() {
 
     // Create a new blog post object
     await axios
-      .post("http://localhost:3000/api/create", blogData)
+      .post(
+        "https://fire-blog-backend-38c5c2cf4228.herokuapp.com/api/create",
+        blogData
+      )
       .then((res) => {
         navigate("/");
-        toast.success("Post deleted successfully");
+        toast.success("Post created successfully");
       })
       .catch((err) => {
         console.log(err);
-        toast.error("Failed to delete post");
-        
+        toast.error("Failed to create post");
       });
   };
 
@@ -72,7 +74,7 @@ function CreatePostForm() {
 
       <div style={{ textAlign: "center", maxWidth: "600px", margin: "0 auto" }}>
         {!mobileView ? (
-          <Typography variant="h3" gutterBottom style={{marginTop:"5vh"}}>
+          <Typography variant="h3" gutterBottom style={{ marginTop: "5vh" }}>
             Create New Post
           </Typography>
         ) : null}
@@ -83,7 +85,7 @@ function CreatePostForm() {
             borderRadius: "10px",
             maxWidth: "100%",
             margin: "10px",
-            marginTop:"10vh"
+            marginTop: "10vh",
           }}
         >
           <form
