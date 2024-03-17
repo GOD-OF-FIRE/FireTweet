@@ -39,6 +39,7 @@ function HomePage({ onLogout }) {
       const response = await axios.get("http://localhost:3000/api/getAll");
       setPosts(response.data);
     } catch (error) {
+      toast.error("Failed to Fetch Post");
       console.error("Error fetching data:", error);
     }
   };
@@ -120,7 +121,7 @@ function HomePage({ onLogout }) {
         <Typography
           variant="h4"
           style={{
-            color: "red",
+            color: "#fff",
             display: "flex",
             flexWrap: "wrap",
             overflow: "hidden",
@@ -132,7 +133,7 @@ function HomePage({ onLogout }) {
         </Typography>
 
         <IconButton
-          style={{ color: "red", marginRight: "1em" }}
+          style={{ color: "#fff", marginRight: "1em" }}
           onClick={() => {
             onLogout();
           }}
@@ -158,8 +159,8 @@ function HomePage({ onLogout }) {
         </IconButton>
         <div
           style={{
-            width: "100%",
-            padding: "12px",
+            // width: "100%",
+            // padding: "12px",
             display: "flex",
             justifyContent: "center",
             flexDirection: "column",
@@ -168,7 +169,7 @@ function HomePage({ onLogout }) {
           <Typography
             variant={mobileView ? "h4" : "h2"}
             style={{
-              marginBottom: "20px",
+              margin: "20px 0px",
               textAlign: "center",
               color: "#fff",
               textShadow: "2px 2px 4px #fff",
@@ -176,46 +177,47 @@ function HomePage({ onLogout }) {
           >
             Blazing Articles
           </Typography>
-
-          {posts.map((post, index) => (
-            <div
-              key={index}
-              style={{
-                background: "#fff",
-                margin: "12px",
-                color: "#333",
-                padding: "12px",
-                borderRadius: "10px",
-                maxWidth: "80vw",
-              }}
-            >
+          <div style={{display:"flex",flexDirection:"column",alignItems:"center"}}>
+            {posts.map((post, index) => (
               <div
+                key={index}
                 style={{
-                  display: "flex",
-                  justifyContent: "flex-end",
+                  background: "#fff",
+                  margin: "12px",
+                  color: "#333",
+                  padding: "12px",
+                  borderRadius: "10px",
+                  maxWidth: "80vw",
                 }}
               >
-                <IconButton
-                  onClick={() => {
-                    handleEditClick(post);
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "flex-end",
                   }}
                 >
-                  <EditIcon sx={{ color: "#176fe2" }} />
-                </IconButton>
-                <IconButton
-                  onClick={() => {
-                    handleDeleteClick(post);
-                  }}
-                >
-                  <DeleteIcon sx={{ color: "#e21717" }} />
-                </IconButton>
+                  <IconButton
+                    onClick={() => {
+                      handleEditClick(post);
+                    }}
+                  >
+                    <EditIcon sx={{ color: "#176fe2" }} />
+                  </IconButton>
+                  <IconButton
+                    onClick={() => {
+                      handleDeleteClick(post);
+                    }}
+                  >
+                    <DeleteIcon sx={{ color: "#e21717" }} />
+                  </IconButton>
+                </div>
+                <Typography variant="h4" style={{ marginBottom: "10px" }}>
+                  {post?.name}
+                </Typography>
+                <Typography variant="body1">{post?.content}</Typography>
               </div>
-              <Typography variant="h4" style={{ marginBottom: "10px" }}>
-                {post?.name}
-              </Typography>
-              <Typography variant="body1">{post?.content}</Typography>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
         <Drawer
           anchor={mobileView ? "bottom" : "right"}
