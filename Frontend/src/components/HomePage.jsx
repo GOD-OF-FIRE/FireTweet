@@ -12,6 +12,7 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
+  InputAdornment // Import InputAdornment
 } from "@mui/material";
 import LogoutIcon from "@mui/icons-material/Logout";
 import AddIcon from "@mui/icons-material/Add";
@@ -19,6 +20,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import CancelIcon from "@mui/icons-material/Cancel";
 import SearchIcon from "@mui/icons-material/Search";
+import ClearIcon from "@mui/icons-material/Clear"; // Import ClearIcon
 import { isMobile } from "../utilities/DetectViewportSize";
 import { toast } from "react-hot-toast";
 
@@ -31,7 +33,6 @@ function HomePage({ onLogout }) {
     content: "",
   });
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
-  const [selectedPostToDelete, setSelectedPostToDelete] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const mobileView = isMobile();
@@ -218,17 +219,26 @@ function HomePage({ onLogout }) {
                 size="small" // Set the size to small
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                style={{ marginRight: "10px" }}
+                InputProps={{ // Add InputProps for adornment
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      {searchQuery && ( // Show clear icon if searchQuery is not empty
+                        <IconButton
+                          onClick={() => setSearchQuery("")} // Clear searchQuery when clicked
+                        >
+                          <ClearIcon />
+                        </IconButton>
+                      )}
+                      <IconButton
+                        onClick={handleSearch}
+                        sx={{ paddingRight: "0" }}
+                      >
+                        <SearchIcon />
+                      </IconButton>
+                    </InputAdornment>
+                  )
+                }}
               />
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={handleSearch}
-                startIcon={<SearchIcon />}
-                sx={{pr:2,pl:2}}
-              >
-                Search
-              </Button>
             </div>
 
             {(searchResults.length > 0 ? searchResults : posts).map(
