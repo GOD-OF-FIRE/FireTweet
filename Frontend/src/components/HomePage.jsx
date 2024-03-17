@@ -251,6 +251,7 @@ function HomePage({ onLogout }) {
                     color: "#333",
                     padding: "12px",
                     borderRadius: "10px",
+                    width:"100%",
                     maxWidth: "80vw",
                   }}
                 >
