@@ -42,7 +42,7 @@ function HomePage({ onLogout }) {
   const fetchData = async () => {
     try {
       const response = await axios.get(
-        "https://fire-blog-backend-38c5c2cf4228.herokuapp.com/api/getAll"
+        "https://fireblog-backend.onrender.com/api/getAll"
       );
       setPosts(response.data);
     } catch (error) {
@@ -71,7 +71,7 @@ function HomePage({ onLogout }) {
   const handleSaveChanges = async () => {
     try {
       await axios.put(
-        `https://fire-blog-backend-38c5c2cf4228.herokuapp.com/api/update/${editedPost?._id}`,
+        `https://fireblog-backend.onrender.com/api/update/${editedPost?._id}`,
         editedPost
       );
       toast.success("Post updated successfully");
@@ -92,7 +92,7 @@ function HomePage({ onLogout }) {
   const handleConfirmDelete = async () => {
     try {
       await axios.delete(
-        `https://fire-blog-backend-38c5c2cf4228.herokuapp.com/api/delete/${selectedPostToDelete._id}`
+        `https://fireblog-backend.onrender.com/api/delete/${selectedPostToDelete._id}`
       );
       fetchData();
       toast.success("Post deleted successfully");
@@ -107,7 +107,7 @@ function HomePage({ onLogout }) {
   const handleSearch = async () => {
     try {
       const response = await axios.get(
-        `https://fire-blog-backend-38c5c2cf4228.herokuapp.com/api/getAll?q=${searchQuery}`
+        `https://fireblog-backend.onrender.com/api/getAll?q=${searchQuery}`
       );
       setSearchResults(response.data);
     } catch (error) {

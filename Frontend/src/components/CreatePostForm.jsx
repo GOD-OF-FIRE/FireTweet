@@ -26,7 +26,7 @@ function CreatePostForm() {
     // Create a new blog post object
     await axios
       .post(
-        "https://fire-blog-backend-38c5c2cf4228.herokuapp.com/api/create",
+        "https://fireblog-backend.onrender.com/api/create",
         blogData
       )
       .then((res) => {
